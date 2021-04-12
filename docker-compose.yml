@@ -19,5 +19,8 @@ services:
     volumes:
       - db-store:/var/lib/mysql
 
+  db-testing:
+    build: ./.docker/mysql
+
 volumes:
   db-store:
