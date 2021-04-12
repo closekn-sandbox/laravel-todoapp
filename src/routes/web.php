@@ -19,8 +19,10 @@ use App\Http\Controllers\FolderController;
 
 Route::get(
     '/',
-    [HomeController::class, 'index']
+    [HomeController::class, 'index'],
 )->name('home');
+
+require __DIR__.'/auth.php';
 
 Route::get(
     '/folders/{id}/tasks',

@@ -5,6 +5,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1 \
     COMPOSER_HOME=/composer
 
 COPY --from=composer:1.10 /usr/bin/composer /usr/bin/composer
+COPY --from=node:latest /usr/local/bin /usr/local/bin
+COPY --from=node:latest /usr/local/lib /usr/local/lib
 
 RUN apt-get update \
     && apt-get -y install git unzip libzip-dev libicu-dev libonig-dev \
