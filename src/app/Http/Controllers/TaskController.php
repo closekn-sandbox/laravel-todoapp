@@ -19,7 +19,7 @@ class TaskController extends Controller
 
         return view('tasks/index', [
             'folders' => $folders,
-            'current_folder_id' => $folder->id,
+            'current_folder' => $folder,
             'tasks' => $tasks,
         ]);
     }
@@ -27,7 +27,7 @@ class TaskController extends Controller
     public function showCreateForm(Folder $folder)
     {
         return view("tasks/create", [
-            'folder_id' => $folder->id
+            'folder' => $folder,
         ]);
     }
 
@@ -40,13 +40,13 @@ class TaskController extends Controller
         $folder->tasks()->save($task);
 
         return redirect()->route('tasks.index', [
-            'id' => $folder->id,
+            'folder' => $folder,
         ]);
     }
 
     public function showEditForm(Folder $folder, Task $task)
     {
-        checkRelation($folder, $task);
+        $this->checkRelation($folder, $task);
 
         return view('tasks/edit', [
             'task' => $task,
@@ -55,7 +55,7 @@ class TaskController extends Controller
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {
-        checkRelation($folder, $task);
+        $this->checkRelation($folder, $task);
 
         $task->title = $request->title;
         $task->status = $request->status;
@@ -63,7 +63,7 @@ class TaskController extends Controller
         $task->save();
 
         return redirect()->route('tasks.index', [
-            'id' => $task->folder_id,
+            'folder' => $folder,
         ]);
     }
 
